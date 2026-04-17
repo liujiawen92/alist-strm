@@ -2,62 +2,51 @@
 
 ## 选项 1: Docker Hub（推荐）
 
-### 1. 准备
-- 在 https://hub.docker.com 注册账号
-- 创建 Access Token（Settings -> Security -> New Access Token）
-
-### 2. 本地构建并推送
 ```bash
-# 登录 Docker Hub
-docker login
-
-# 构建
-docker build -t YOUR_DOCKERHUB_USERNAME/alist-strm-fixed:latest .
-
-# 推送
-docker push YOUR_DOCKERHUB_USERNAME/alist-strm-fixed:latest
+docker pull liujiawen92/alist-strm-fixed:latest
 ```
 
-### 3. 使用
-```bash
-docker pull YOUR_DOCKERHUB_USERNAME/alist-strm-fixed:latest
+### docker-compose.yml
+
+```yaml
+version: '3'
+services:
+  alist-strm:
+    image: liujiawen92/alist-strm-fixed:latest
+    container_name: alist-strm
+    ports:
+      - "5245:5000"
+    environment:
+      - TZ=Asia/Shanghai
+      - FLASK_APP=app.py
+      - FLASK_ENV=production
+      - CONFIG_PATH=/config
+    volumes:
+      - ./video:/data/video
+      - ./config:/config
+    restart: unless-stopped
 ```
 
 ---
 
 ## 选项 2: GitHub Container Registry
 
-### 1. 准备
-- 在 GitHub 创建 Personal Access Token（Settings -> Developer settings -> Personal access tokens -> Tokens (classic)）
-- 勾选 `write:packages` 权限
-
-### 2. 本地构建并推送
 ```bash
-# 登录 GitHub Container Registry
-echo YOUR_GITHUB_TOKEN | docker login ghcr.io -u YOUR_GITHUB_USERNAME --password-stdin
+# 登录
+echo YOUR_GITHUB_TOKEN | docker login ghcr.io -u liujiawen92 --password-stdin
 
-# 构建并标记
-docker build -t ghcr.io/YOUR_GITHUB_USERNAME/alist-strm-fixed:latest .
-
-# 推送
-docker push ghcr.io/YOUR_GITHUB_USERNAME/alist-strm-fixed:latest
-```
-
-### 3. 使用
-```bash
-docker pull ghcr.io/YOUR_GITHUB_USERNAME/alist-strm-fixed:latest
+# 拉取
+docker pull ghcr.io/liujiawen92/alist-strm-fixed:latest
 ```
 
 ---
 
 ## 选项 3: 使用群晖 NAS 直接构建
 
-如果你有群晖 Docker，可以在群晖上直接构建：
-
 ```bash
 # SSH 登录群晖后
 cd /tmp
-git clone YOUR_REPO_URL
+git clone https://github.com/liujiawen92/alist-strm-fixed.git
 cd alist-strm-fixed
 
 # 构建
