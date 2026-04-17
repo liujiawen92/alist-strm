@@ -15,7 +15,7 @@ services:
     image: liujiawen92/alist-strm-fixed:latest
     container_name: alist-strm
     ports:
-      - "5245:5000"
+      - "8080:5000"
     environment:
       - TZ=Asia/Shanghai
       - FLASK_APP=app.py

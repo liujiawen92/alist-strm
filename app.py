@@ -16,7 +16,7 @@ from task_scheduler import add_tasks_to_cron, update_tasks_in_cron, delete_tasks
 
 
 app = Flask(__name__)
-app.secret_key = 'www.tefuir0829.cn'
+app.secret_key = os.environ.get('SECRET_KEY', os.urandom(32).hex())
 
 
 # 定义图片文件夹路径
@@ -1010,8 +1010,8 @@ def forgot_password():
         new_password = request.form['new_password']
         confirm_password = request.form['confirm_password']
 
-        # 获取安全码，默认为 'alist-strm'
-        stored_security_code = os.getenv('SECURITY_CODE', 'alist-strm')
+        # 获取安全码（强烈建议通过环境变量设置）
+        stored_security_code = os.getenv('SECURITY_CODE', os.urandom(8).hex())
         if os.path.exists(ENV_FILE):
             with open(ENV_FILE, 'r') as f:
                 for line in f:
@@ -1103,7 +1103,7 @@ ENV_FILE = '/config/app.env'
 def ensure_env_file():
     """确保 app.env 存在并同步环境变量，如果没有安全码和端口则自动填入默认值"""
     default_port = '5000'
-    default_security_code = 'alist-strm'
+    default_security_code = os.urandom(8).hex()
 
     # 创建 /config 目录（如果不存在）
     config_dir = '/config'
@@ -1113,7 +1113,7 @@ def ensure_env_file():
 
     # 从环境变量获取端口和安全码
     port = os.getenv('WEB_PORT', default_port)  # 默认端口5000
-    security_code = os.getenv('SECURITY_CODE', default_security_code)  # 默认安全码 'alist-strm'
+    security_code = os.getenv('SECURITY_CODE', default_security_code)
 
 
 

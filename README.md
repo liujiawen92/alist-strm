@@ -42,7 +42,7 @@ services:
     image: liujiawen92/alist-strm-fixed:latest
     container_name: alist-strm
     ports:
-      - "5245:5000"
+      - "8080:5000"
     environment:
       - TZ=Asia/Shanghai
       - FLASK_APP=app.py
@@ -54,19 +54,19 @@ services:
     restart: unless-stopped
 ```
 
-## 默认账号
+## 登录账号
 
-- 用户名：`liujiawen`
-- 密码：`Liu410402@`
+首次部署后请通过 Web 界面（忘记密码）功能设置账号，或通过环境变量 `SECURITY_CODE` 重置。
 
-> ⚠️ 首次部署后请立即修改密码
+## 环境变量
+
+| 变量名 | 说明 | 默认值 |
+|--------|------|--------|
+| `SECRET_KEY` | Flask 加密密钥 | 随机生成 |
+| `SECURITY_CODE` | 重置密码安全码 | 随机生成 |
+| `WEB_PORT` | Web 服务端口 | `5000` |
 
 ## 版本标签
-
-| Tag | 说明 |
-|-----|------|
-| `latest` | 最新版本 |
-| `6.0.9-ui` | v2.0 Bootstrap 5 深色主题版 |
 
 ## 本地构建
 
