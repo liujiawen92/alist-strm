@@ -1,4 +1,11 @@
-# alist-strm
+# alist-strm-fixed
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/liujiawen92/alist-strm-fixed?style=flat-square&logo=docker)](https://hub.docker.com/r/liujiawen92/alist-strm-fixed)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/liujiawen92/alist-strm-fixed/docker-build.yml?style=flat-square&logo=github)](https://github.com/liujiawen92/alist-strm-fixed/actions)
+[![GitHub last commit](https://img.shields.io/github/last-commit/liujiawen92/alist-strm-fixed?style=flat-square&logo=github)](https://github.com/liujiawen92/alist-strm-fixed)
+[![GitHub License](https://img.shields.io/github/license/liujiawen92/alist-strm-fixed?style=flat-square&logo=github)](LICENSE)
+[![Platform](https://img.shields.io/badge/platform-amd64%20%7C%20arm64-blue?style=flat-square&logo=linux)]()
+[![Docker Hub](https://img.shields.io/badge/docker-latest%20%7C%206.0.8--fixed-blue?style=flat-square&logo=docker)](https://hub.docker.com/r/liujiawen92/alist-strm-fixed/tags)
 
 基于 [itefuir/alist-strm](https://hub.docker.com/r/itefuir/alist-strm) 的修复版本，解决原镜像中的崩溃循环和参数缺失问题。
 
@@ -10,7 +17,7 @@
 4. **修复函数参数顺序** - local_tree 应在 min_interval 之前
 5. **添加 JWT Token 获取重试** - 网络波动时自动重试 3 次
 
-## 使用方法
+## 快速开始
 
 ### Docker Hub
 
@@ -52,16 +59,9 @@ services:
 # 构建
 docker build -t alist-strm-fixed:latest .
 
-# 标记
-docker tag alist-strm-fixed:latest liujiawen92/alist-strm-fixed:latest
-
-# 推送
-docker push liujiawen92/alist-strm-fixed:latest
+# 标记并推送
+./build.sh
 ```
-
-## GitHub Actions 自动构建
-
-每次推送到 master 分支会自动构建并推送镜像到 Docker Hub（amd64 + arm64 双架构）。
 
 ## 相关项目
 
@@ -70,4 +70,4 @@ docker push liujiawen92/alist-strm-fixed:latest
 
 ## License
 
-MIT License
+MIT License - 详见 [LICENSE](LICENSE) 文件
