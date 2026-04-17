@@ -1,6 +1,6 @@
 # alist-strm-fixed
 
-基于 [itefuir/alist-strm](https://hub.docker.com/r/itefuir/alist-strm) 的修复版本。
+基于 [itefuir/alist-strm](https://hub.docker.com/r/itefuir/alist-strm) 的修复版本，解决原镜像中的崩溃循环和参数缺失问题。
 
 ## 修复内容
 
@@ -15,7 +15,7 @@
 ### Docker Hub
 
 ```bash
-docker pull YOUR_DOCKERHUB_USERNAME/alist-strm-fixed:latest
+docker pull liujiawen92/alist-strm-fixed:latest
 ```
 
 ### docker-compose.yml
@@ -24,7 +24,7 @@ docker pull YOUR_DOCKERHUB_USERNAME/alist-strm-fixed:latest
 version: '3'
 services:
   alist-strm:
-    image: YOUR_DOCKERHUB_USERNAME/alist-strm-fixed:latest
+    image: liujiawen92/alist-strm-fixed:latest
     container_name: alist-strm
     ports:
       - "5245:5000"
@@ -39,6 +39,13 @@ services:
     restart: unless-stopped
 ```
 
+## 版本标签
+
+| Tag | 说明 |
+|-----|------|
+| `latest` | 最新版本 |
+| `6.0.8-fixed` | 当前修复版本（基于 alist-strm 6.0.8） |
+
 ## 本地构建
 
 ```bash
@@ -46,16 +53,21 @@ services:
 docker build -t alist-strm-fixed:latest .
 
 # 标记
-docker tag alist-strm-fixed:latest YOUR_DOCKERHUB_USERNAME/alist-strm-fixed:latest
+docker tag alist-strm-fixed:latest liujiawen92/alist-strm-fixed:latest
 
 # 推送
-docker push YOUR_DOCKERHUB_USERNAME/alist-strm-fixed:latest
+docker push liujiawen92/alist-strm-fixed:latest
 ```
 
 ## GitHub Actions 自动构建
 
-将此仓库推送到 GitHub，配置 Secrets：
-- `DOCKER_USERNAME`: Docker Hub 用户名
-- `DOCKER_PASSWORD`: Docker Hub 密码或 Access Token
+每次推送到 master 分支会自动构建并推送镜像到 Docker Hub（amd64 + arm64 双架构）。
 
-每次推送到 main 分支会自动构建并推送镜像。
+## 相关项目
+
+- [itefuir/alist-strm](https://github.com/tefuirZ/alist-strm) - 原项目
+- [Docker Hub](https://hub.docker.com/r/liujiawen92/alist-strm-fixed) - 镜像地址
+
+## License
+
+MIT License
