@@ -103,6 +103,33 @@ def apply_fixes():
     with open(main_py, 'w') as f:
         f.write(content)
 
+    # ========== Fix 6: 修复 templates/configs.html 端点名 ==========
+    # 原模板使用 url_for('edit') 和 url_for('delete')，
+    # 但 app.py 里的路由端点名是 'edit_config' 和 'delete_config'
+    templates_dir = '/app/templates'
+    configs_html = os.path.join(templates_dir, 'configs.html')
+
+    if os.path.exists(configs_html):
+        with open(configs_html, 'r') as f:
+            tpl = f.read()
+        changes = 0
+        if "url_for('edit', config_id=config[0])" in tpl:
+            tpl = tpl.replace(
+                "url_for('edit', config_id=config[0])",
+                "url_for('edit_config', config_id=config[0])"
+            )
+            changes += 1
+        if "url_for('delete', config_id=config[0])" in tpl:
+            tpl = tpl.replace(
+                "url_for('delete', config_id=config[0])",
+                "url_for('delete_config', config_id=config[0])"
+            )
+            changes += 1
+        if changes > 0:
+            with open(configs_html, 'w') as f:
+                f.write(tpl)
+            fixes_applied.append(f'Fix 6: Fixed {changes} url_for endpoint names in configs.html')
+
     # 打印修复摘要
     print("=" * 50)
     print("alist-strm fixes applied:")
