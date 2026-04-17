@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}配置文件 - alist-strm{% endblock %}
+{% block main %}
+<div class="topbar">
+    <div class="page-title">
+        <i class="bi bi-file-earmark-code text-accent"></i> 配置文件
+        <div class="subtitle">管理所有 strm 生成配置文件</div>
+    </div>
+    <a href="{{ url_for('new_config') }}" class="btn btn-accent">
+        <i class="bi bi-plus-lg me-1"></i>新建配置
+    </a>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ 'danger' if category == 'danger' else 'info' }} alert-dismissible fade show" role="alert">
+            <i class="bi bi-{{ 'exclamation-triangle' if category == 'danger' else 'info-circle' }} me-2"></i>
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="card">
+    <div class="card-body p-0">
+        {% if configs %}
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th style="width:44px;"></th>
+                        <th>名称</th>
+                        <th>Alist地址</th>
+                        <th>网盘路径</th>
+                        <th>本地路径</th>
+                        <th>任务数</th>
+                        <th>状态</th>
+                        <th style="width:160px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for config in configs %}
+                    <tr>
+                        <td><i class="bi bi-folder-fill text-accent"></i></td>
+                        <td><strong>{{ config.name }}</strong></td>
+                        <td class="small text-secondary">{{ config.alist_url }}</td>
+                        <td class="small">{{ config.path }}</td>
+                        <td class="small">{{ config.local_path }}</td>
+                        <td><span class="badge bg-secondary">{{ config.task_count|default(0) }}</span></td>
+                        <td>
+                            {% if config.enabled %}
+                            <span class="badge bg-success-subtle text-success">
+                                <i class="bi bi-play-circle me-1"></i>启用
+                            </span>
+                            {% else %}
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-pause-circle me-1"></i>禁用
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('edit_config', config_id=config.id) }}" 
+                               class="btn btn-sm btn-outline-secondary" title="编辑">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{{ url_for('run_config', config_id=config.id) }}" 
+                               class="btn btn-sm btn-accent" title="运行">
+                                <i class="bi bi-play-fill"></i>
+                            </a>
+                            <a href="{{ url_for('logs_single', config_id=config.id) }}" 
+                               class="btn btn-sm btn-outline-secondary" title="日志">
+                                <i class="bi bi-terminal"></i>
+                            </a>
+                            <a href="{{ url_for('delete_config', config_id=config.id) }}" 
+                               class="btn btn-sm btn-outline-danger" title="删除"
+                               onclick="return confirm('确定要删除此配置吗？')">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="bi bi-inbox fs-1 text-secondary"></i>
+            <p class="text-secondary mt-3 mb-3">还没有配置文件</p>
+            <a href="{{ url_for('new_config') }}" class="btn btn-accent">
+                <i class="bi bi-plus-lg me-1"></i>创建第一个配置
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
