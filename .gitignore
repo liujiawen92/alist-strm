@@ -1,5 +1,39 @@
-# .gitignore
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Env
 .env
+.env.local
+
+# Logs
 *.log
+logs/
+
+# OS
 .DS_Store
 Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# App data (mounted volumes)
+config/
+video/
+
+# Temp
+*.tmp
+*.temp
+.cache/
