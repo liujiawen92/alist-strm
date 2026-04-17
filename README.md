@@ -1,4 +1,4 @@
-# alist-strm-fixed
+# alist-strm
 
 基于 [itefuir/alist-strm](https://hub.docker.com/r/itefuir/alist-strm) 的修复版本，解决原镜像中的崩溃循环和参数缺失问题。
 
