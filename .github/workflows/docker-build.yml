@@ -2,7 +2,7 @@ name: Build and Push Docker Image
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:
 
 env:
@@ -34,4 +34,6 @@ jobs:
         context: .
         platforms: linux/amd64,linux/arm64
         push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/alist-strm-fixed:latest
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/alist-strm-fixed:latest
+          ${{ secrets.DOCKER_USERNAME }}/alist-strm-fixed:6.0.8-fixed
