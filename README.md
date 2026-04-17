@@ -5,9 +5,16 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/liujiawen92/alist-strm-fixed?style=flat-square&logo=github)](https://github.com/liujiawen92/alist-strm-fixed)
 [![GitHub License](https://img.shields.io/github/license/liujiawen92/alist-strm-fixed?style=flat-square&logo=github)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-amd64%20%7C%20arm64-blue?style=flat-square&logo=linux)]()
-[![Docker Hub](https://img.shields.io/badge/docker-latest%20%7C%206.0.8--fixed-blue?style=flat-square&logo=docker)](https://hub.docker.com/r/liujiawen92/alist-strm-fixed/tags)
 
-基于 [itefuir/alist-strm](https://hub.docker.com/r/itefuir/alist-strm) 的修复版本，解决原镜像中的崩溃循环和参数缺失问题。
+基于 [itefuir/alist-strm](https://hub.docker.com/r/itefuir/alist-strm) 的修复版本，解决原镜像中的崩溃循环和参数缺失问题，并提供现代化深色主题管理界面。
+
+## v2.0 新特性（Bootstrap 5 深色主题 UI）
+
+- 🎨 **Bootstrap 5 深色主题** - 护眼深色界面，紫罗兰色点缀
+- 📱 **响应式布局** - 支持桌面和移动端
+- ✅ **全页面兼容** - 首页、配置管理、定时任务、设置、关于等所有页面完整支持
+- 🔐 **安全认证页** - 独立的深色主题登录/注册/忘记密码页面
+- ⚡ **零崩溃** - 禁用自动更新，彻底解决崩溃循环
 
 ## 修复内容
 
@@ -16,6 +23,7 @@
 3. **修复 process_with_cache 参数缺失** - 补充 min_interval 和 max_interval 参数
 4. **修复函数参数顺序** - local_tree 应在 min_interval 之前
 5. **添加 JWT Token 获取重试** - 网络波动时自动重试 3 次
+6. **Bootstrap 5 深色主题 UI** - 现代化管理界面（v2.0 新增）
 
 ## 快速开始
 
@@ -46,20 +54,28 @@ services:
     restart: unless-stopped
 ```
 
+## 默认账号
+
+- 用户名：`liujiawen`
+- 密码：`Liu410402@`
+
+> ⚠️ 首次部署后请立即修改密码
+
 ## 版本标签
 
 | Tag | 说明 |
 |-----|------|
 | `latest` | 最新版本 |
-| `6.0.8-fixed` | 当前修复版本（基于 alist-strm 6.0.8） |
+| `6.0.9-ui` | v2.0 Bootstrap 5 深色主题版 |
 
 ## 本地构建
 
 ```bash
-# 构建
-docker build -t alist-strm-fixed:latest .
+# 克隆仓库
+git clone https://github.com/liujiawen92/alist-strm-fixed.git
+cd alist-strm-fixed
 
-# 标记并推送
+# 构建并推送
 ./build.sh
 ```
 
