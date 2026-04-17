@@ -54,11 +54,6 @@ services:
     restart: unless-stopped
 ```
 
-## 默认账号
-
-- 用户名：`liujiawen`
-- 密码：`Liu410402@`
-
 > ⚠️ 首次部署后请立即修改密码
 
 ## 版本标签
