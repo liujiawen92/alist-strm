@@ -47,7 +47,8 @@
                         <td class="small">{{ config[4] }}</td>
                         <td class="small">{{ config[5] }}</td>
                         <td>
-                            <a href="{{ url_for('edit_config', config_id=config[0]) }}" class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></a>
+                            <a href="{{ url_for('edit_config', config_id=config[0]) }}" class="btn btn-sm btn-outline-secondary" title="编辑"><i class="bi bi-pencil"></i></a>
+                            <a href="{{ url_for('run_config', config_id=config[0]) }}" class="btn btn-sm btn-outline-success" title="立即运行" onclick="return confirm('确认立即运行该配置？')"><i class="bi bi-play-fill"></i></a>
                             <form method="POST" action="{{ url_for('delete_config', config_id=config[0]) }}" style="display:inline;">
                                 <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('确定删除该配置吗？')"><i class="bi bi-trash"></i></button>
                             </form>

@@ -528,20 +528,28 @@ def logs(config_id):
     )
 
 
-# 定义函数来运行 main.py
-def run_config(config_id):
-    # 获取当前文件的目录路径
+def _run_config_impl(config_id):
+    """内部实现：启动 main.py 生成 strm（无返回值）"""
     current_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # 使用绝对路径指定 main.py 的位置
     main_script_path = os.path.join(current_dir, 'main.py')
-
     if os.path.exists(main_script_path):
         command = f"/usr/local/bin/python3.9 {main_script_path} {config_id}"
-        logger.info(f"启动配置ID: {config_id} 的命令: {command}")
+        logger.info(f"手动运行配置ID: {config_id}")
         subprocess.Popen(command, shell=True)
+        return True
     else:
-        logger.error(f"无法找到 main.py 文件: {main_script_path}")
+        logger.error(f"无法找到 main.py: {main_script_path}")
+        return False
+
+@app.route('/run_config/<int:config_id>')
+def run_config(config_id):
+    """手动运行指定配置（配置文件页立即执行按钮）"""
+    ok = _run_config_impl(config_id)
+    if ok:
+        flash(f'配置已开始后台运行，可在日志页查看进度', 'success')
+    else:
+        flash('无法找到 main.py 文件', 'error')
+    return redirect(url_for('configs'))
 
 @app.route('/run_selected_configs', methods=['POST'])
 def run_selected_configs():
@@ -567,7 +575,7 @@ def run_selected_configs():
 
     elif action == 'run_selected':
         for config_id in selected_configs:
-            run_config(int(config_id))  # 调用 `run_config` 函数来运行 main.py
+            _run_config_impl(int(config_id))  # 调用 `run_config` 函数来运行 main.py
         flash('选定的配置已开始运行！', 'success')
 
     return redirect(url_for('configs'))
